@@ -2,10 +2,12 @@ using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 using cw_3.DAL;
 using cw_3.Middlewares;
 using cw_3.Services;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -15,6 +17,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Microsoft.IdentityModel.Tokens;
 
 namespace cw_3
 {
@@ -32,6 +35,19 @@ namespace cw_3
         {
             services.AddTransient<IStudentDbService, SqlServerDbService>();
             services.AddSingleton<IDbService, MockDbService>();
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                    .AddJwtBearer(options =>
+                    {
+                        options.TokenValidationParameters = new TokenValidationParameters
+                        {
+                            ValidateIssuer = true,
+                            ValidateAudience = true,
+                            ValidateLifetime = true,
+                            ValidIssuer = "Gakko",
+                            ValidAudience = "Students",
+                            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["SecretKey"]))
+                        };
+                    });
             services.AddControllers();
         }
 
@@ -47,7 +63,7 @@ namespace cw_3
 
             //app.UseWhen(warunek, wykonaj jesli true)
 
-            app.Use(async (context, next) =>
+            /*app.Use(async (context, next) =>
             {
                 if (!context.Request.Headers.ContainsKey("IndexNumber"))
                 {
@@ -76,7 +92,7 @@ namespace cw_3
                 await next();
             });
 
-            app.UseMiddleware<LoggingMiddleware>();
+            app.UseMiddleware<LoggingMiddleware>();*/
 
             app.UseRouting();
 
