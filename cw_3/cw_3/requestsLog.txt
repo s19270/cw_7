@@ -1,0 +1,1 @@
+["POST","/api/enrollments","{\r\n\u0022IndexNumber\u0022: \u0022s1234\u0022,\r\n\u0022FirstName\u0022: \u0022Andrzej\u0022,\r\n\u0022LastName\u0022: \u0022Malewski\u0022,\r\n\u0022BirthDate\u0022: \u002230.03.1993\u0022,\r\n\u0022Studies\u0022: \u0022IT\u0022\r\n}",""]
