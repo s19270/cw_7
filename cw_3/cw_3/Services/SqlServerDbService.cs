@@ -48,11 +48,17 @@ namespace cw_3.Services
                     com.Parameters.AddWithValue("lastname", student.LastName);
                     com.Parameters.AddWithValue("birthdate", student.Birthdate);
                     com.ExecuteNonQuery();
+                    trans.Commit();
                     return "Dodano nowego studenta";
                 }
                 catch (Exception ex)
                 {
-                    trans.Rollback("Wystapili bledy");
+                    try
+                    {
+                        trans.Rollback("Wystapili bledy");
+                    }
+                    catch (Exception ex2) {
+                    }
                 }
                 return "Wystapili bledy";
             }
@@ -98,11 +104,18 @@ namespace cw_3.Services
                     com.Parameters.AddWithValue("studies", studies);
                     com.Parameters.AddWithValue("semester", semester);
                     com.ExecuteNonQuery();
+                    trans.Commit();
                     return "Studenci uzyskali promocje";
                 }
                 catch (Exception ex)
                 {
-                    //trans.Rollback("Wystapil blad");
+                    try
+                    {
+                        trans.Rollback("Wystapili bledy");
+                    }
+                    catch (Exception ex2)
+                    {
+                    }
                 }
                 return "Wystapily bledy";
             }
