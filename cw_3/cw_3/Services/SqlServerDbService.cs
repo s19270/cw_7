@@ -89,6 +89,25 @@ namespace cw_3.Services
             return (list);
         }
 
+        public bool Logging(string indexnumber, string password)
+        {
+            using (SqlConnection con = new SqlConnection(conString))
+            using (SqlCommand com = new SqlCommand())
+            {
+                con.Open();
+                com.Connection = con;
+                com.CommandText = "select 1 from Student where IndexNumber = @indexnumber and Password = @password;";
+                com.Parameters.AddWithValue("indexnumber", indexnumber);
+                com.Parameters.AddWithValue("password", password);
+                SqlDataReader dr = com.ExecuteReader();
+                if (dr.Read())
+                {
+                    return true;
+                }
+                else return false;
+            }
+        }
+
         public String PromoteStudents(string studies, int semester)
         {
             using (SqlConnection con = new SqlConnection(conString))

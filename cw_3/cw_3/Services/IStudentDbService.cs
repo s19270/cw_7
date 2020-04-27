@@ -11,5 +11,6 @@ namespace cw_3.Services
         String AddStudent(NewStudent student);
         List<Student> GetStudents();
         string PromoteStudents(string studies, int semester);
+        Boolean Logging(string indexnumber, string password);
     }
 }

@@ -44,6 +44,7 @@ namespace cw_3.Controllers
         [AllowAnonymous]
         public IActionResult Login(LoginRequest login)
         {
+            if (!service.Logging(login.login, login.password)) return Unauthorized("Brak ucznia w bazie");
             var claims = new[]
 {
                 new Claim(ClaimTypes.NameIdentifier, "1"),
