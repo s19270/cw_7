@@ -32,6 +32,7 @@ namespace cw_3.Services
                     }
                     com.CommandText = "select * from Studies inner join Enrollment on Studies.IdStudy = Enrollment.IdStudy where Name = @studies and Semester = 1;";
                     com.Parameters.AddWithValue("studies", student.Studies);
+                    dr.Close();
                     dr = com.ExecuteReader();
                     if (!dr.Read())
                     {
@@ -39,6 +40,7 @@ namespace cw_3.Services
                                             "values((select max(IdStudy) from Studies) + 1, @studies) " +
                                             "insert into Enrollment(IdEnrollment, Semester, IdStudy, StartDate) " +
                                             "values((select max(IdEnrollment) from Enrollment) + 1, 1, (select IdStudy from Studies where Name = @studies), GETDATE())";
+                        dr.Close();
                         com.ExecuteNonQuery();
                     }
                     com.CommandText = "insert into Student(IndexNumber, FirstName, LastName, BirthDate, IdEnrollment) " +
@@ -47,6 +49,7 @@ namespace cw_3.Services
                     com.Parameters.AddWithValue("firstname", student.FirstName);
                     com.Parameters.AddWithValue("lastname", student.LastName);
                     com.Parameters.AddWithValue("birthdate", student.Birthdate);
+                    dr.Close();
                     com.ExecuteNonQuery();
                     trans.Commit();
                     return "Dodano nowego studenta";

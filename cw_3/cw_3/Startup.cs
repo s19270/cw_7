@@ -40,9 +40,9 @@ namespace cw_3
                     {
                         options.TokenValidationParameters = new TokenValidationParameters
                         {
-                            ValidateIssuer = false,
-                            ValidateAudience = false,
-                            ValidateLifetime = false,
+                            ValidateIssuer = true,
+                            ValidateAudience = true,
+                            ValidateLifetime = true,
                             ValidIssuer = "Gakko",
                             ValidAudience = "Students",
                             IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["SecretKey"]))

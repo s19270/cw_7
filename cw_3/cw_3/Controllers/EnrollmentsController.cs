@@ -19,7 +19,7 @@ namespace cw_3.Controllers
 {
     [Route("api/enrollments")]
     [ApiController]
-    //[Authorize(Roles = "employee")]
+    [Authorize(Roles = "employee")]
     public class EnrollmentsController : ControllerBase
     {
         public readonly string conString = "Data Source=db-mssql;Initial Catalog=s19270;Integrated Security=True";
@@ -37,14 +37,13 @@ namespace cw_3.Controllers
         [HttpPost("promotions")]
         public IActionResult Promote([FromBody]string studies, [FromBody]int semester)
         {
-            return Ok((studies + ", " + semester));
             return Ok(service.PromoteStudents(studies, semester));
         }
         [HttpPost("login")]
         [AllowAnonymous]
         public IActionResult Login(LoginRequest login)
         {
-            //if (!service.Logging(login.login, login.password)) return Unauthorized("Brak ucznia w bazie");
+            if (!service.Logging(login.login, login.password)) return Unauthorized("Brak ucznia w bazie");
             var claims = new[]
 {
                 new Claim(ClaimTypes.NameIdentifier, "1"),
