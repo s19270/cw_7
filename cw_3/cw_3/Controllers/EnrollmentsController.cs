@@ -35,7 +35,7 @@ namespace cw_3.Controllers
             return Ok(service.AddStudent(student));
         }
         [HttpPost("promotions")]
-        public IActionResult Promote(string studies, int semester)
+        public IActionResult Promote([FromBody]string studies, [FromBody]int semester)
         {
             return Ok((studies + ", " + semester));
             return Ok(service.PromoteStudents(studies, semester));
@@ -44,7 +44,7 @@ namespace cw_3.Controllers
         [AllowAnonymous]
         public IActionResult Login(LoginRequest login)
         {
-            if (!service.Logging(login.login, login.password)) return Unauthorized("Brak ucznia w bazie");
+            //if (!service.Logging(login.login, login.password)) return Unauthorized("Brak ucznia w bazie");
             var claims = new[]
 {
                 new Claim(ClaimTypes.NameIdentifier, "1"),
